@@ -21,6 +21,7 @@ public class VoteBot {
     // Set Proxy
     HttpHost proxy = new HttpHost(host, port);
 
+    // Set no SSL certificate verification and no retry
     CloseableHttpClient httpClient = HttpClients.custom()
         .setSSLHostnameVerifier(new NoopHostnameVerifier()).setProxy(proxy).setRetryHandler(new DefaultHttpRequestRetryHandler(0, false))
         .build();

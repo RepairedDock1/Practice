@@ -1,6 +1,7 @@
 package votebot.vote;
 
 import java.util.List;
+import votebot.proxies.ProxyAddress;
 
 public class VoteRunnable implements Runnable {
   List<ProxyAddress> proxyAddresses;

@@ -1,4 +1,4 @@
-package votebot.vote;
+package votebot.proxies;
 
 public class ProxyAddress {
   private String host;

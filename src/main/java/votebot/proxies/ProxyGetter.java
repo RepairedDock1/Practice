@@ -15,12 +15,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
-import votebot.vote.ProxyAddress;
 
 public class ProxyGetter {
   public List<ProxyAddress> getNewProxyAddressesFromWebsite(){
     List<ProxyAddress> proxyAddresses = Lists.newArrayList();
-    // Setup Headers with agent
+
+    // Setup Headers with user-agent to look like browser
     RestTemplate restTemplate = new RestTemplate();
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -29,8 +29,9 @@ public class ProxyGetter {
 
     // Get Webpage
     String proxyPayload = restTemplate.exchange("https://free-proxy-list.net/", HttpMethod.GET,entity, String.class).toString();
-    Document proxyPageHtml = Jsoup.parse(proxyPayload);
 
+    // Parse html for proxy addresses
+    Document proxyPageHtml = Jsoup.parse(proxyPayload);
     Elements proxyRows = proxyPageHtml.getElementById("proxylisttable").getElementsByTag("tr");
     for(Element proxyRow: proxyRows){
       Elements columns = proxyRow.getElementsByTag("td");
@@ -47,14 +48,15 @@ public class ProxyGetter {
 
   public List<ProxyAddress> getProxyListFromFile() throws FileNotFoundException {
     List<ProxyAddress> proxyAddresses = Lists.newArrayList();
+    Scanner scanner = new Scanner(new File(getClass().getClassLoader().getResource("votebot/proxy.txt").getPath()));
 
-    Scanner scanner = new Scanner(new File("/Users/jxb5862/Documents/git/Practice/src/main/java/votebot/proxy.txt"));
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
 
       proxyAddresses.add(new ProxyAddress(line.split(":")[0], Integer.valueOf(line.split(":")[1])));
     }
 
+    scanner.close();
     return proxyAddresses;
   }
 }
