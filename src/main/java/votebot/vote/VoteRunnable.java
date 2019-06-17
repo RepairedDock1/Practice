@@ -12,10 +12,8 @@ public class VoteRunnable implements Runnable {
 
   @Override
   public void run() {
-    VoteBot voteBot = new VoteBot();
-
     for(ProxyAddress proxyAddress: proxyAddresses){
-        voteBot.vote(proxyAddress.getHost(), proxyAddress.getPort());
+        VoteBot.vote(proxyAddress.getHost(), proxyAddress.getPort());
     }
   }
 }

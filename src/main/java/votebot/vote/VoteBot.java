@@ -54,12 +54,13 @@ public class VoteBot {
       ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
       if(!response.toString().contains("You've already submitted a response")){
         successCount++;
-        System.out.println("Success Count:  " + successCount + " from Thread: " + Thread.currentThread().getName());
+        System.out.println("SUCCESS FOR HOST: " + host + " FROM THREAD: " + Thread.currentThread().getName() + " SUCCESS COUNT: " + successCount);
+      } else{
+        System.out.println("DUPLICATE FOR HOST: " + host + " WITH RESPONSE: " + response);
       }
-      System.out.println("SUCCESS for host: " + host);
     }
     catch(Throwable error){
-      System.out.println("Failed for host: " + host + " with ERROR: " + error.getMessage());
+      System.out.println("FAILED FOR HOST: " + host + " WITH ERROR: " + error.getMessage());
     }
   }
 }

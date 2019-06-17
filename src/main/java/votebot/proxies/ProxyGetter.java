@@ -46,9 +46,9 @@ public class ProxyGetter {
     return proxyAddresses;
   }
 
-  public List<ProxyAddress> getProxyListFromFile() throws FileNotFoundException {
+  public List<ProxyAddress> getProxyListFromFile(String fileName) throws FileNotFoundException {
     List<ProxyAddress> proxyAddresses = Lists.newArrayList();
-    Scanner scanner = new Scanner(new File(getClass().getClassLoader().getResource("votebot/proxy.txt").getPath()));
+    Scanner scanner = new Scanner(new File(getClass().getClassLoader().getResource("votebot/" + fileName).getPath()));
 
     while (scanner.hasNextLine()) {
       String line = scanner.nextLine();
