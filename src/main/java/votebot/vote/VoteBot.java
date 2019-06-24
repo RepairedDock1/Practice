@@ -1,5 +1,6 @@
 package votebot.vote;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.http.HttpHost;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -15,7 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 public class VoteBot {
-  private static Integer successCount = 0;
+  private static AtomicInteger successCount = new AtomicInteger(0);
 
   public static void vote(String host, Integer port){
     // Set Proxy
@@ -53,14 +54,14 @@ public class VoteBot {
     try {
       ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
       if(!response.toString().contains("You've already submitted a response")){
-        successCount++;
+        successCount.getAndIncrement();
         System.out.println("SUCCESS FOR HOST: " + host + " FROM THREAD: " + Thread.currentThread().getName() + " SUCCESS COUNT: " + successCount);
       } else{
         System.out.println("DUPLICATE FOR HOST: " + host + " WITH RESPONSE: " + response);
       }
     }
     catch(Throwable error){
-      System.out.println("FAILED FOR HOST: " + host + " WITH ERROR: " + error.getMessage());
+       System.out.println("FAILED FOR HOST: " + host + " WITH ERROR: " + error.getMessage());
     }
   }
 }

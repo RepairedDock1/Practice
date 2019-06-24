@@ -17,7 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 public class ProxyGetter {
-  public List<ProxyAddress> getNewProxyAddressesFromWebsite(){
+  public List<ProxyAddress> getListFromWebsite(){
     List<ProxyAddress> proxyAddresses = Lists.newArrayList();
 
     // Setup Headers with user-agent to look like browser
@@ -28,7 +28,7 @@ public class ProxyGetter {
     HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
     // Get Webpage
-    String proxyPayload = restTemplate.exchange("https://free-proxy-list.net/", HttpMethod.GET,entity, String.class).toString();
+    String proxyPayload = restTemplate.exchange("https://free-proxy-list.net/", HttpMethod.GET, entity, String.class).toString();
 
     // Parse html for proxy addresses
     Document proxyPageHtml = Jsoup.parse(proxyPayload);
