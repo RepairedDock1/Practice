@@ -35,5 +35,6 @@ public class ExecutorServicePractice {
     }
 
     System.out.println(count);
+    executorService.shutdown();
   }
 }
